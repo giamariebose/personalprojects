@@ -9,7 +9,11 @@ print(start_date)
 while True:
     try:
         monthlydaydue = int(input("On what day of the month is payment due?"))
-        break ##exit loop if the input is valid
+        if 1 <= monthlydaydue <= 28:
+            break  # Valid input; exit the loop
+        else:
+            print("This calculator can only calculate for due dates between 1 and 28, please enter 28 if due date is usually later.")    
+            
     except ValueError:
         print("Invalid input. please enter valid day as number") 
 
@@ -32,7 +36,10 @@ while True:
 while True:
     try:
         promoexpirationday = int(input("Enter promo expiration day (DD): "))
-        break #exit loop if the input is valid
+        if 1 <= promoexpirationday <= 31:
+            break  # Valid input; exit the loop
+        else:
+            print("Invalid input. Please enter a number between 1 and 31.")
     except ValueError:
         print("Invalid input. please enter valid year as number")
 
@@ -69,3 +76,25 @@ try:
     print(f"The number of months with a {monthlydaydue} before {promoexpirationdate} is: {result}")
 except ValueError as e:
     print(f"Invalid input: {e}")
+
+##at this point the following variables are key
+## result is the count of months with the due date between current date and expiration
+## promoexpirationdate is the expiration date of the promo
+
+while True:
+    try:
+        balancedue = float(input("Enter balancedue: "))
+        break #exit loop if the input is valid
+    except ValueError:
+        print("Invalid input. please enter valid year as number")
+
+print("balance due is: $",balancedue," and the full payment is due by ",promoexpirationdate)
+
+monthlypayment = balancedue/result
+print("monthly payments required for this balance $",monthlypayment)
+
+##does the current month have a due date that hasn't passed?
+##if date has passed
+##then start listing month/year from next month with monthly payment and running total until number of months until expiration have passed
+##if date has not passed
+##then start listing month/year from this month with monthly payment and running total until number of months until expiration have passed
