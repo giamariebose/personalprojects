@@ -147,22 +147,36 @@ except ValueError as e:
 
 ##at this point the following variables are key
 ## result is the count of months with the due date between current date and expiration
-## promoexpirationdate is the expiration date of the promo
+## autopromoexpdatedate is the expiration date of the promo in date format
 
 while True:
     try:
         balancedue = float(input("Enter balancedue: "))
         break #exit loop if the input is valid
     except ValueError:
-        print("Invalid input. please enter valid year as number")
+        print("Invalid input. please enter balance due as number")
 
 print("balance due is: $",balancedue," and the full payment is due by ",autopromoexpdatedate)
 
-monthlypayment = balancedue/result
+monthlypayment = round(balancedue/result,2)
 print("monthly payments required for this balance $",monthlypayment)
 
-##does the current month have a due date that hasn't passed?
-##if date has passed
-##then start listing month/year from next month with monthly payment and running total until number of months until expiration have passed
-##if date has not passed
+
+
 ##then start listing month/year from this month with monthly payment and running total until number of months until expiration have passed
+previouslypaid = int("0")
+for i in range (result):
+    runningtotal = monthlypayment+previouslypaid
+    previouslypaid = runningtotal
+    print(f"due date: {autonextduedatedate}")
+    print(f"monthly payment due: {monthlypayment}")
+    print(f"total paid to date is: {runningtotal}")    
+    
+    #move to next month
+    next_month = autonextduedatedate.month % 12 + 1
+    next_year = autonextduedatedate.year + (autonextduedatedate.month // 12)
+    autonextduedatedate = autonextduedatedate.replace(year=next_year, month=next_month)
+    
+##next:
+# get the data to store in an array and display as a table
+#  build the promos into functions and add a prompt for number of promos and loop through
