@@ -3,6 +3,12 @@
 ## this can cause the total by the last payment to be off by an estimated 25 cents by the end of the term. 
 ## considering forcing rounding to round up if possible
 
+##Next thoughts
+## - change to use dictionary
+## - since dic cannot have duplicate keys, create next 36 due dates and populate into a due dates dictionary
+## - sub dictionary for monthly payment and running total
+## - build calculations into functions, so that number of promos can be prompted and fxn run for each to store in subdic.
+## - also need to fix rounding issue above. 
 
 # import module
 from tabulate import tabulate
