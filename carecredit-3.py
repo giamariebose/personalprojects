@@ -17,6 +17,8 @@ import re
 from tabulate import tabulate
 
 
+
+
 # Initialize a list to store mdata
 carecredit_data = []
 
