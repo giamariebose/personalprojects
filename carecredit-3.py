@@ -2,6 +2,15 @@
 from tabulate import tabulate
 from datetime import datetime, date, timedelta
 import re
+from tabulate import tabulate
+
+
+# Initialize a list to store mdata
+carecredit_data = []
+
+#define currency format
+def format_currency(amount):
+    return "${:,.2f}".format(amount)
 
 start_date = date.today()
 print("startdate is ")
@@ -168,15 +177,28 @@ previouslypaid = int("0")
 for i in range (result):
     runningtotal = monthlypayment+previouslypaid
     previouslypaid = runningtotal
-    print(f"due date: {autonextduedatedate}")
-    print(f"monthly payment due: {monthlypayment}")
-    print(f"total paid to date is: {runningtotal}")    
-    
+ #   print(f"due date: {autonextduedatedate}")
+ #   print(f"monthly payment due: {monthlypayment}")
+ #   print(f"total paid to date is: {runningtotal}")    
+
+    ##print table of data
+    carecredit_data.append((autonextduedatedate, monthlypayment, runningtotal))
+
     #move to next month
     next_month = autonextduedatedate.month % 12 + 1
     next_year = autonextduedatedate.year + (autonextduedatedate.month // 12)
     autonextduedatedate = autonextduedatedate.replace(year=next_year, month=next_month)
     
-##next:
+
+headers = ["Due Date", "Monthly Payment", "Running Total"]
+
+print(tabulate(carecredit_data, headers=headers, tablefmt="grid", floatfmt=(".2f", ".2f", ".2f")))
+
+#print(carecredit_data)
+
+#for autonextduedatedate, monthlypayment, runningtotal in carecredit_data:
+#    print(f"{autonextduedatedate:<15}{monthlypayment:<15}{runningtotal:<15}")
+    
+    ##next:
 # get the data to store in an array and display as a table
 #  build the promos into functions and add a prompt for number of promos and loop through
