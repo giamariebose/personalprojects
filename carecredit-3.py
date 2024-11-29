@@ -1,3 +1,9 @@
+## NOTES
+## depending on the amount and lenth of financing, rounding may cause the monthly payment to be off by a penny
+## this can cause the total by the last payment to be off by an estimated 25 cents by the end of the term. 
+## considering forcing rounding to round up if possible
+
+
 # import module
 from tabulate import tabulate
 from datetime import datetime, date, timedelta
@@ -128,7 +134,7 @@ print(f"promo expires on date {autopromoexpdatedate}")
 def count_months_with_due_date(due_day, end_date):
     count = 0
     #current_date = date.today().replace(day=1)  # Start from the 1st of the current month
-    current_date = date.today()
+    current_date = autonextduedatedate
 
     while current_date <= end_date:
         try:
