@@ -22,13 +22,15 @@ newdict = {
 
 }
 
-newdict.update({
-    "Record ID" : recordid2,
-    "Balance Due" : balancedue2,
-    "Due Date" : duedate2,
-    "monthly payment" : monthlypayment2,
-    "Running Total" : runningtotal2
-})
+newdict[""]
+
+#newdict.update({
+#    "Record ID" : recordid2,
+#    "Balance Due" : balancedue2,
+#    "Due Date" : duedate2,
+#    "monthly payment" : monthlypayment2,
+#    "Running Total" : runningtotal2
+#})
 
 print("Naked dictionary print:")
 print(newdict)
