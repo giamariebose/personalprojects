@@ -1,7 +1,6 @@
 ## NOTES
 ## depending on the amount and lenth of financing, rounding may cause the monthly payment to be off by a penny
 ## this can cause the total by the last payment to be off by an estimated 25 cents by the end of the term. 
-## considering forcing rounding to round up if possible
 
 ##Next thoughts
 ## - change to use dictionary
@@ -9,12 +8,15 @@
 ## - sub dictionary for monthly payment and running total
 ## - build calculations into functions, so that number of promos can be prompted and fxn run for each to store in subdic.
 ## - also need to fix rounding issue above. 
+## - CORRECTED: Date calculations if due date is in last days of month. 
+##              this fixes skipping due dates for months that don't have those days and calculating payments for those months
 
 # import module
 from tabulate import tabulate
 from datetime import datetime, date, timedelta
 import re
 from tabulate import tabulate
+import calendar
 
 
 
@@ -26,9 +28,24 @@ carecredit_data = []
 def format_currency(amount):
     return "${:,.2f}".format(amount)
 
-start_date = date.today()
-print("startdate is ")
-print(start_date)
+##define date test for correcting days out of range:
+def adjust_date_to_last_day(input_date):
+    try:
+        # Try to use the input date as-is
+        valid_date = input_date
+        return valid_date
+    except ValueError:
+        # If the day is invalid, adjust to the last day of the month
+        year = input_date.year
+        month = input_date.month
+        last_day = calendar.monthrange(year, month)[1]
+        return date(year, month, last_day)
+
+
+
+#start_date = date.today()
+#print("startdate is ")
+#print(start_date)
 
 ##testing to see if I can get the date and break it out the way I want
 while True:
@@ -37,7 +54,17 @@ while True:
         pattern = r"^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$"
         # Check if the input matches the pattern
         if re.match(pattern, autodatenextdue):
-            print(f"The date {autodatenextdue} is valid.")
+            autonextduesplit = autodatenextdue.split("-")
+            automonthdue = int(autonextduesplit[0])
+            autodaydue = int(autonextduesplit[1])
+            autoyeardue = int(autonextduesplit[2]) 
+            autonextduedatedate = date(autoyeardue, automonthdue, autodaydue)
+            ##option for making all dates 28 to catch months without a 29/30/31
+            #if autodaydue > 28:
+            #    autodaydue = 28
+            #    autonextduedatedate = date(autoyeardue, automonthdue, autodaydue)
+            #    print(f"Due date {autodaydue} is after the 28th, to handle months with less than 28 days, due dates will be shown as the 28th of the month")                
+            print(f"The date {autonextduedatedate} is valid.")
             break
         else:
             print("Invalid date format. Please enter a date in MM-DD-YYYY format.")
@@ -45,11 +72,7 @@ while True:
             print("Invalid input. please enter valid day as number") 
 
 ##less repetitive split
-autonextduesplit = autodatenextdue.split("-")
-automonthdue = int(autonextduesplit[0])
-autodaydue = int(autonextduesplit[1])
-autoyeardue = int(autonextduesplit[2]) 
-autonextduedatedate = date(autoyeardue, automonthdue, autodaydue)
+
 
 ##the following splits successfully, above attempting to clean up
 #automonthdue = autodatenextdue.split("-")[0]
@@ -147,7 +170,12 @@ def count_months_with_due_date(due_day, end_date):
     while current_date <= end_date:
         try:
             # Set the day to the due day for the current month
-            due_date = current_date.replace(day=due_day)
+            try:
+                due_date = current_date.replace(day=due_day)
+            except ValueError:
+                last_day = calendar.monthrange(next_year, next_month)[1]
+                due_date = date(next_year, next_month, last_day)
+            ##check if date is valid for month
             if due_date <= end_date:
                 count += 1
         except ValueError:
@@ -158,8 +186,7 @@ def count_months_with_due_date(due_day, end_date):
         # Move to the first day of the next month
         next_month = current_date.month % 12 + 1
         next_year = current_date.year + (current_date.month // 12)
-        current_date = current_date.replace(year=next_year, month=next_month, day=1)
-    
+        current_date = current_date.replace(year=next_year, month=next_month, day=1)        
     return count
 
 try:
@@ -201,7 +228,15 @@ for i in range (result):
     #move to next month
     next_month = autonextduedatedate.month % 12 + 1
     next_year = autonextduedatedate.year + (autonextduedatedate.month // 12)
-    autonextduedatedate = autonextduedatedate.replace(year=next_year, month=next_month)
+    ##testing date here
+    try:
+        autonextduedatedate = date(next_year, next_month, autodaydue)
+    except ValueError:
+        # If the day is invalid, adjust to the last day of the month
+        last_day = calendar.monthrange(next_year, next_month)[1]
+        autonextduedatedate = date(next_year, next_month, last_day)     
+
+    #autonextduedatedate = autonextduedatedate.replace(year=next_year, month=next_month)
     
 
 headers = ["Due Date", "Monthly Payment", "Running Total"]
