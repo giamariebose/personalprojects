@@ -1,13 +1,17 @@
 ## NOTES
-## depending on the amount and lenth of financing, rounding may cause the monthly payment to be off by a penny
-## this can cause the total by the last payment to be off by an estimated 25 cents by the end of the term. 
+## depending on the amount and lenth of financing, rounding could have caused the payments to be under.
+## to alleviate this, rounding was forced to round up. This can cause payments to be over by a few pennies.
+## this should be negligible but errors on the side over overpaying by a few pennies rather than underpaying 
+## to mitigate risk of underpaying and missing promo date by pennies, which could end up costing the full financing to be charged.
+## in the long run, when down to the last few payments, should monitor expirations/balance closely regardless
+## this tool is designed to be as exact as possible, but is not a guarantee.
 
 ##Next thoughts
 ## - change to use dictionary
 ## - since dic cannot have duplicate keys, create next 36 due dates and populate into a due dates dictionary
 ## - sub dictionary for monthly payment and running total
 ## - build calculations into functions, so that number of promos can be prompted and fxn run for each to store in subdic.
-## - also need to fix rounding issue above. 
+## - CORRECTED: Rounding down could have caused a minor underpayment, forcing round up
 ## - CORRECTED: Date calculations if due date is in last days of month. 
 ##              this fixes skipping due dates for months that don't have those days and calculating payments for those months
 
@@ -17,6 +21,7 @@ from datetime import datetime, date, timedelta
 import re
 from tabulate import tabulate
 import calendar
+import math
 
 
 
@@ -41,6 +46,9 @@ def adjust_date_to_last_day(input_date):
         last_day = calendar.monthrange(year, month)[1]
         return date(year, month, last_day)
 
+##define rounding up
+def round_up_to_nearest_hundredth(x):
+    return math.ceil(x * 100) / 100
 
 
 #start_date = date.today()
@@ -208,7 +216,10 @@ while True:
 
 print("balance due is: $",balancedue," and the full payment is due by ",autopromoexpdatedate)
 
-monthlypayment = round(balancedue/result,2)
+monthlypaymentfull = balancedue/result
+#original rounding which can round down
+#monthlypayment = round(balancedue/result,2)
+monthlypayment = round_up_to_nearest_hundredth(monthlypaymentfull)
 print("monthly payments required for this balance $",monthlypayment)
 
 
