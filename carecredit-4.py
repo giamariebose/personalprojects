@@ -32,3 +32,11 @@ csvfile.close()
 promocount = len(rows)
 print(f"number of promos: {promocount}")
 
+promoID = int('1')
+
+for promo in rows:
+   print(f"Promo ID: {promoID}")
+   print(f"Next Due Date: {promo[0]}")
+   print(f"Promo Expiration: {promo[1]}")
+   print(f"Amount Financed: ${float(promo[2])}")
+   promoID += 1
