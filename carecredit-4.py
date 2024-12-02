@@ -39,7 +39,7 @@ def round_up_to_nearest_hundredth(x):
 def count_months_with_due_date(due_day, end_date):
     count = 0
     #current_date = date.today().replace(day=1)  # Start from the 1st of the current month
-    current_date = autonextduedatedate
+    current_date = nextduedate
 
     while current_date <= end_date:
         try:
@@ -116,7 +116,8 @@ print(f"number of promos: {promocount}")
 promoID = int('1')
 
 for promo in rows:
-   ##ADD: set variables for duedate, expiration, amountfinanced
+   print("_________________________________________________")
+   ## set variables for duedate, expiration, amountfinanced
    nextduesplit = promo[0].split("/")
    nextduemonth = int(nextduesplit[0])
    nextdueday = int(nextduesplit[1])
@@ -136,8 +137,9 @@ for promo in rows:
    ##note to self, look here to display two decimal places
    print(f"Amount Financed: ${promoamountfinanced:.2f}")
 
-   ##ADD: calculate monthly payments remaining
-
+   ## calculate monthly payments remaining
+   promopaymentsremaining = count_months_with_due_date(nextdueday, promoexpdate)
+   print(f"Number of Due Dates before Expiration: {promopaymentsremaining}")
    ##ADD: calculate monthly payments
 
    ##ADD: calculate upcoming due dates and store in a temporary array
