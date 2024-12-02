@@ -11,6 +11,8 @@ import re
 from tabulate import tabulate
 import calendar
 import math
+from dateutil.relativedelta import relativedelta
+
 
 ##Define Formats and Functions
 
@@ -70,18 +72,19 @@ def count_months_with_due_date(due_day, end_date):
         print(f"Invalid input: {e}")
 
 ##FUNCTION: move to next due month with checking for valid date
-def calculate_next_due_date(due_day, end_date):
+def calculate_next_due_date(calc_nextduedate, end_date):
+    due_day = calc_nextduedate.day()
 
     #move to next month
-    next_month = nextduedate.month % 12 + 1
-    next_year = nextduedate.year + (autonextduedatedate.month // 12)
+    next_month = calc_nextduedate.month % 12 + 1
+    next_year = calc_nextduedate.year + (calc_nextduedate.month // 12)
     ##testing date here
     try:
-        nextduedate = date(next_year, next_month, nextdueday)
+        calc_nextduedate = date(next_year, next_month, due_day)
     except ValueError:
         # If the day is invalid, adjust to the last day of the month
         last_day = calendar.monthrange(next_year, next_month)[1]
-        nextduedate = date(next_year, next_month, last_day)     
+        calc_nextduedate = date(next_year, next_month, last_day)     
 
 
 ##prompt for csv file with windows explorer
@@ -140,7 +143,7 @@ for promo in rows:
    ## calculate monthly payments remaining
    promopaymentsremaining = count_months_with_due_date(nextdueday, promoexpdate)
    print(f"Number of Due Dates before Expiration: {promopaymentsremaining}")
-   
+
    ## calculate monthly payments
    promomonthlypayments = promoamountfinanced / promopaymentsremaining
    promomonthlypaymentsround = round_up_to_nearest_hundredth(promomonthlypayments)
@@ -148,8 +151,16 @@ for promo in rows:
 
    ##ADD: calculate upcoming due dates and store in a temporary array for next 36 months?
    ##if so, end date is nextduedate + 36 months
-        ##ADD: split day out of next payment due
+   thirtysixmonthsout = nextduedate + relativedelta(months=36)
+   ##temp print for testing
+   print(f"36 months out {thirtysixmonthsout}")
+   #next36payments = calculate_next_due_date(nextduedate, thirtysixmonthsout)
    #loop here for number of payments remaining
+   calc_nextduedate = nextduedate
+   for i in range(promopaymentsremaining):
+       print(f"Next Due: {calc_nextduedate}")
+       calculate_next_due_date(calc_nextduedate, thirtysixmonthsout)
+
    #nextnextduedate = calculate_next_due_date(due_day, end_date)
    ##ADD: define previously paid as 0
 
