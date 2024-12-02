@@ -73,7 +73,8 @@ def count_months_with_due_date(due_day, end_date):
 
 ##FUNCTION: move to next due month with checking for valid date
 def calculate_next_due_date(calc_nextduedate, end_date):
-    due_day = calc_nextduedate.day()
+    print(f"Next Due Date: {calc_nextduedate}")
+    due_day = calc_nextduedate.day 
 
     #move to next month
     next_month = calc_nextduedate.month % 12 + 1
@@ -84,7 +85,7 @@ def calculate_next_due_date(calc_nextduedate, end_date):
     except ValueError:
         # If the day is invalid, adjust to the last day of the month
         last_day = calendar.monthrange(next_year, next_month)[1]
-        calc_nextduedate = date(next_year, next_month, last_day)     
+        calc_nextduedate = date(next_year, next_month, due_day)     
 
 
 ##prompt for csv file with windows explorer
@@ -156,22 +157,32 @@ for promo in rows:
    print(f"36 months out {thirtysixmonthsout}")
    #next36payments = calculate_next_due_date(nextduedate, thirtysixmonthsout)
    #loop here for number of payments remaining
-   calc_nextduedate = nextduedate
+   previouslypaid = int("0")
    for i in range(promopaymentsremaining):
-       print(f"Next Due: {calc_nextduedate}")
-       calculate_next_due_date(calc_nextduedate, thirtysixmonthsout)
+    runningtotal = promomonthlypaymentsround+previouslypaid
+    previouslypaid = runningtotal
+    # print(f"due date: {autonextduedatedate}")
+    # print(f"monthly payment due: {monthlypayment}")
+    # print(f"total paid to date is: {runningtotal}")    
 
-   #nextnextduedate = calculate_next_due_date(due_day, end_date)
-   ##ADD: define previously paid as 0
-
-   ##ADD:  loop thru array
-
-       ##ADD: calculate previously paid+monthly payment
-       ##ADD: calculate remaining balance as balancedue - previously paid
-       ##ADD:  note: using previously paid after adding current month payment so it includes both at this point
+    # move to next month
+    next_month = nextduedate.month % 12 + 1
+    next_year = nextduedate.year + (nextduedate.month // 12)
+    ##testing date here
+    try:
+        nextduedate = date(next_year, next_month, nextdueday)
+    except ValueError:
+        # If the day is invalid, adjust to the last day of the month
+        last_day = calendar.monthrange(next_year, next_month)[1]
+        nextduedate = date(next_year, next_month, last_day) 
+    print("- - - - - - - - - - - - - - - - - - - - -- - --")
+    print(f"Next Due Date: {nextduedate}")
+    print(f"Monthly Payment: {promomonthlypaymentsround}")
+    print(f"Running Total: {previouslypaid:.2f}")
+    
+    ## ADD: output each line to a list??? array?? object??? csv???
 
    
-   ##dump these out line by line to a temp csv
 
    ##increase promo ID number before looping again.
    promoID += 1
@@ -180,3 +191,13 @@ for promo in rows:
 ##then dump out to final csv
 ##then delete temp csv
 ##display results?
+
+## OR 
+
+## ADD: combine output from previous on matching dates to a table with columns
+##       - Next Due Date
+##       - PromoID monthly payment
+##       - Running total paid
+##       - all promos monthly payment
+##       - all promos running total
+   
