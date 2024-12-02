@@ -73,15 +73,15 @@ def count_months_with_due_date(due_day, end_date):
 def calculate_next_due_date(due_day, end_date):
 
     #move to next month
-    next_month = autonextduedatedate.month % 12 + 1
-    next_year = autonextduedatedate.year + (autonextduedatedate.month // 12)
+    next_month = nextduedate.month % 12 + 1
+    next_year = nextduedate.year + (autonextduedatedate.month // 12)
     ##testing date here
     try:
-        autonextduedatedate = date(next_year, next_month, autodaydue)
+        nextduedate = date(next_year, next_month, nextdueday)
     except ValueError:
         # If the day is invalid, adjust to the last day of the month
         last_day = calendar.monthrange(next_year, next_month)[1]
-        autonextduedatedate = date(next_year, next_month, last_day)     
+        nextduedate = date(next_year, next_month, last_day)     
 
 
 ##prompt for csv file with windows explorer
@@ -140,11 +140,17 @@ for promo in rows:
    ## calculate monthly payments remaining
    promopaymentsremaining = count_months_with_due_date(nextdueday, promoexpdate)
    print(f"Number of Due Dates before Expiration: {promopaymentsremaining}")
-   ##ADD: calculate monthly payments
+   
+   ## calculate monthly payments
+   promomonthlypayments = promoamountfinanced / promopaymentsremaining
+   promomonthlypaymentsround = round_up_to_nearest_hundredth(promomonthlypayments)
+   print(f"Monthly Payment Required: ${promomonthlypaymentsround}")
 
-   ##ADD: calculate upcoming due dates and store in a temporary array
+   ##ADD: calculate upcoming due dates and store in a temporary array for next 36 months?
+   ##if so, end date is nextduedate + 36 months
         ##ADD: split day out of next payment due
-
+   #loop here for number of payments remaining
+   #nextnextduedate = calculate_next_due_date(due_day, end_date)
    ##ADD: define previously paid as 0
 
    ##ADD:  loop thru array
