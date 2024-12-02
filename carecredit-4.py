@@ -72,6 +72,7 @@ def count_months_with_due_date(due_day, end_date):
         print(f"Invalid input: {e}")
 
 ##FUNCTION: move to next due month with checking for valid date
+##MIGHT REMOVE AS COULDN"T BUILD INTO LOOP
 def calculate_next_due_date(calc_nextduedate, end_date):
     print(f"Next Due Date: {calc_nextduedate}")
     due_day = calc_nextduedate.day 
