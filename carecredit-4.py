@@ -99,27 +99,42 @@ with open(file_path, 'r') as csvfile:
   # Create a reader object
   csv_reader = csv.reader(csvfile)
   header = next(csv_reader)
-  print(header)
+  ##printing used for testing
+  #print(header)
   rows = []
   for row in csv_reader:
     rows.append(row)
-print(rows)
+##printing used for testing    
+#print(rows)
 csvfile.close()
   
 ##count number of rows in rows
 promocount = len(rows)
 print(f"number of promos: {promocount}")
 
+#declare first promo ID, will be incremented in next loop
 promoID = int('1')
 
 for promo in rows:
-   ##ADD: set variables for promoID, duedate, expiration, amountfinanced
+   ##ADD: set variables for duedate, expiration, amountfinanced
+   nextduesplit = promo[0].split("/")
+   nextduemonth = int(nextduesplit[0])
+   nextdueday = int(nextduesplit[1])
+   nextdueyear = int(nextduesplit[2])
+   nextduedate = date(nextdueyear, nextduemonth, nextdueday)
+   promoexpsplit = promo[1].split("/")
+   promoexpmonth = int(promoexpsplit[0])
+   promoexpday = int(promoexpsplit[1])
+   promoexpyear = int(promoexpsplit[2])
+   promoexpdate = date(promoexpyear, promoexpmonth, promoexpday)
+   promoamountfinanced = float(promo[2])
 
    ##print promo information
    print(f"Promo ID: {promoID}")
-   print(f"Next Due Date: {promo[0]}")
-   print(f"Promo Expiration: {promo[1]}")
-   print(f"Amount Financed: ${float(promo[2])}")
+   print(f"Next Due Date: {nextduedate}")
+   print(f"Promo Expiration: {promoexpdate}")
+   ##note to self, look here to display two decimal places
+   print(f"Amount Financed: ${promoamountfinanced:.2f}")
 
    ##ADD: calculate monthly payments remaining
 
@@ -137,7 +152,12 @@ for promo in rows:
        ##ADD:  note: using previously paid after adding current month payment so it includes both at this point
 
    
-
+   ##dump these out line by line to a temp csv
 
    ##increase promo ID number before looping again.
    promoID += 1
+
+##use temp csv to import and calculate further
+##then dump out to final csv
+##then delete temp csv
+##display results?
