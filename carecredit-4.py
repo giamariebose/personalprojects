@@ -12,6 +12,7 @@ from tabulate import tabulate
 import calendar
 import math
 from dateutil.relativedelta import relativedelta
+import pandas as pd
 
 
 ##Define Formats and Functions
@@ -106,6 +107,7 @@ export_path = filedialog.askdirectory(title=dialog_title)
 ##declare overall csv export
 export_csv_all = export_path + "/ALL_Promos.csv"
 print(f"csv of all will be exported to {export_csv_all}")
+final_csv_out = export_path + "/ALL_Promos_final.csv"
 
 ##create overall csv export file with headers
 headers_export = ["PromoID", "DueDate", "MonthlyPayment", "RunningTotal"]
@@ -225,16 +227,35 @@ for promo in rows:
         writer = csv.writer(file)
         writer.writerow(promorowforcsv)
     
-    ## ADD: output each line to a list??? array?? object??? csv???
-
-   
+ 
 
    ##increase promo ID number before looping again.
    promoID += 1
 
-##use temp csv to import and calculate further
-##then dump out to final csv
-##then delete temp csv
+##use csv to import and calculate further
+
+allpromosdf = pd.read_csv(export_csv_all)
+
+# Pivot the data so that each PromoID becomes its own set of columns
+pivoted = allpromosdf.pivot(index="DueDate", columns="PromoID", values=["MonthlyPayment", "RunningTotal"])
+
+# Flatten the MultiIndex columns
+pivoted.columns = [f"{col[0]}_{col[1]}" for col in pivoted.columns]
+
+# Reset the index to make DueDate a column again
+pivoted.reset_index(inplace=True)
+
+# Add total columns for MonthlyPayment and RunningTotal
+pivoted["TotalMonthlyPayment"] = pivoted.filter(like="MonthlyPayment").sum(axis=1)
+pivoted["TotalRunningTotal"] = pivoted.filter(like="RunningTotal").sum(axis=1)
+
+# Save the final table to a CSV file
+output_file = "promotion_summary_pivoted.csv"
+pivoted.to_csv(final_csv_out, index=False)
+
+print(f"Pivoted summary file saved to {final_csv_out}")
+
+##then delete temp csvs?
 ##display results?
 
 ## OR 
