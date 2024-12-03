@@ -123,7 +123,7 @@ print(f"number of promos: {promocount}")
 promoID = int('1')
 
 for promo in rows:
-   print("_________________________________________________")
+  # print("_________________________________________________")
    ## set variables for duedate, expiration, amountfinanced
    nextduesplit = promo[0].split("/")
    nextduemonth = int(nextduesplit[0])
