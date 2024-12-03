@@ -1,5 +1,5 @@
-##attempting to use csv import
-
+##ISSUE: in sample data with due date on 30th and promo expiring on 17th of month, 
+## that last month is still counted for some reason even though the promo is expired before the due date. :(
 
 ##import modules
 import csv
@@ -56,7 +56,7 @@ def count_months_with_due_date(due_day, end_date):
             if due_date <= end_date:
                 count += 1
         except ValueError:
-            # Skip months where the due day doesn't exist (e.g., February 30)
+            # Honestly not sure why this is here.
             pass
         
         # Move to the first day of the next month
