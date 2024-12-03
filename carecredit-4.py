@@ -247,13 +247,17 @@ pivoted.reset_index(inplace=True)
 
 # Add total columns for MonthlyPayment and RunningTotal
 pivoted["TotalMonthlyPayment"] = pivoted.filter(like="MonthlyPayment").sum(axis=1)
-pivoted["TotalRunningTotal"] = pivoted.filter(like="RunningTotal").sum(axis=1)
+##this one doesn't total right
+#pivoted["TotalRunningTotal"] = pivoted.filter(like="RunningTotal").sum(axis=1)
+pivoted["RunningTotal"] = pivoted["TotalMonthlyPayment"].cumsum()
 
 # Save the final table to a CSV file
 output_file = "promotion_summary_pivoted.csv"
 pivoted.to_csv(final_csv_out, index=False)
 
 print(f"Pivoted summary file saved to {final_csv_out}")
+
+#print(pivoted)
 
 ##then delete temp csvs?
 ##display results?
