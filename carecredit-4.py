@@ -96,6 +96,8 @@ root.withdraw()  # Hide the main window
 
 file_path = filedialog.askopenfilename()
 
+export_path = filedialog.askdirectory()
+
 if file_path:
     print("Selected file:", file_path)
 
@@ -134,6 +136,11 @@ for promo in rows:
    promoexpyear = int(promoexpsplit[2])
    promoexpdate = date(promoexpyear, promoexpmonth, promoexpday)
    promoamountfinanced = float(promo[2])
+
+   ##set variable for temporary file name
+   promoIDstr = str(promoID)
+   promotempexport = export_path+"/tempdata_promoID"+promoIDstr+".csv"
+   #print(f"temp files will export to {promotempexport}")
 
    ##print promo information
    print(f"Promo ID: {promoID}")
