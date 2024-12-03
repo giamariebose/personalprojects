@@ -57,7 +57,6 @@ def count_months_with_due_date(due_day, end_date):
                 count += 1
         except ValueError:
             # Skip months where the due day doesn't exist (e.g., February 30)
-            ##CONSIDER ADDING CONVERSION OF DUE DAY TO 28 IF DAY IS 29/30/31
             pass
         
         # Move to the first day of the next month
@@ -66,28 +65,11 @@ def count_months_with_due_date(due_day, end_date):
         current_date = current_date.replace(year=next_year, month=next_month, day=1)        
     return count
 
-    try:
-        result = count_months_with_due_date(autodaydue, autopromoexpdatedate)
-        print(f"The number of months with a {autodaydue} before {autopromoexpdatedate} is: {result}")
-    except ValueError as e:
-        print(f"Invalid input: {e}")
-
-##FUNCTION: move to next due month with checking for valid date
-##MIGHT REMOVE AS COULDN"T BUILD INTO LOOP
-def calculate_next_due_date(calc_nextduedate, end_date):
-    print(f"Next Due Date: {calc_nextduedate}")
-    due_day = calc_nextduedate.day 
-
-    #move to next month
-    next_month = calc_nextduedate.month % 12 + 1
-    next_year = calc_nextduedate.year + (calc_nextduedate.month // 12)
-    ##testing date here
-    try:
-        calc_nextduedate = date(next_year, next_month, due_day)
-    except ValueError:
-        # If the day is invalid, adjust to the last day of the month
-        last_day = calendar.monthrange(next_year, next_month)[1]
-        calc_nextduedate = date(next_year, next_month, due_day)     
+#    try:
+#        result = count_months_with_due_date(autodaydue, autopromoexpdatedate)
+#        print(f"The number of months with a {autodaydue} before {autopromoexpdatedate} is: {result}")
+#    except ValueError as e:
+#        print(f"Invalid input: {e}")
 
 
 ##prompt for csv file with windows explorer
@@ -106,25 +88,25 @@ export_path = filedialog.askdirectory(title=dialog_title)
 
 ##declare overall csv export
 export_csv_all = export_path + "/ALL_Promos.csv"
-print(f"csv of all will be exported to {export_csv_all}")
+#print(f"csv of all will be exported to {export_csv_all}")
+
+##declare final csv export
 final_csv_out = export_path + "/ALL_Promos_final.csv"
 
-##create overall csv export file with headers
+##define headers for all files
 headers_export = ["PromoID", "DueDate", "MonthlyPayment", "RunningTotal"]
    
-# Create a CSV file and write the headers for promo specific csv
+# Create a CSV file and write the headers for C-C-C-Combo csv
 with open(export_csv_all, mode="w", newline="") as file:
     writer = csv.DictWriter(file, fieldnames=headers_export)
     writer.writeheader()
 
 
-# Open the CSV file in read mode
+# Open the input CSV file in read mode
 with open(file_path, 'r') as csvfile:
   # Create a reader object
   csv_reader = csv.reader(csvfile)
   header = next(csv_reader)
-  ##printing used for testing
-  #print(header)
   rows = []
   for row in csv_reader:
     rows.append(row)
@@ -137,7 +119,7 @@ promocount = len(rows)
 print(f"number of promos: {promocount}")
 
 
-#declare first promo ID, will be incremented in next loop
+#declare first promo ID, will be incremented in loop
 promoID = int('1')
 
 for promo in rows:
@@ -158,36 +140,29 @@ for promo in rows:
    ##set variable for temporary file name and write headers
    promoIDstr = str(promoID)
    promotempexport = export_path+"/tempdata_promoID"+promoIDstr+".csv"
+
    #print(f"temp files will export to {promotempexport}")
-   headers_export = ["PromoID", "DueDate", "MonthlyPayment", "RunningTotal"]
-   
+      
    # Create a CSV file and write the headers for promo specific csv
    with open(promotempexport, mode="w", newline="") as file:
        writer = csv.DictWriter(file, fieldnames=headers_export)
        writer.writeheader()
 
-   ##print promo information
-   print(f"Promo ID: {promoID}")
-   print(f"Next Due Date: {nextduedate}")
-   print(f"Promo Expiration: {promoexpdate}")
-   ##note to self, look here to display two decimal places
-   print(f"Amount Financed: ${promoamountfinanced:.2f}")
+   ##print promo information used during testing
+   #print(f"Promo ID: {promoID}")
+   #print(f"Next Due Date: {nextduedate}")
+   #print(f"Promo Expiration: {promoexpdate}")
+   #print(f"Amount Financed: ${promoamountfinanced:.2f}")
 
    ## calculate monthly payments remaining
    promopaymentsremaining = count_months_with_due_date(nextdueday, promoexpdate)
-   print(f"Number of Due Dates before Expiration: {promopaymentsremaining}")
+   #print(f"Number of Due Dates before Expiration: {promopaymentsremaining}")
 
    ## calculate monthly payments
    promomonthlypayments = promoamountfinanced / promopaymentsremaining
    promomonthlypaymentsround = round_up_to_nearest_hundredth(promomonthlypayments)
-   print(f"Monthly Payment Required: ${promomonthlypaymentsround}")
+   #print(f"Monthly Payment Required: ${promomonthlypaymentsround}")
 
-   ##ADD: calculate upcoming due dates and store in a temporary array for next 36 months?
-   ##if so, end date is nextduedate + 36 months
-   thirtysixmonthsout = nextduedate + relativedelta(months=36)
-   ##temp print for testing
-   print(f"36 months out {thirtysixmonthsout}")
-   #next36payments = calculate_next_due_date(nextduedate, thirtysixmonthsout)
    #loop here for number of payments remaining
    previouslypaid = int("0")
    for i in range(promopaymentsremaining):
@@ -207,10 +182,10 @@ for promo in rows:
         # If the day is invalid, adjust to the last day of the month
         last_day = calendar.monthrange(next_year, next_month)[1]
         nextduedate = date(next_year, next_month, last_day) 
-    print("- - - - - - - - - - - - - - - - - - - - -- - --")
-    print(f"Next Due Date: {nextduedate}")
-    print(f"Monthly Payment: {promomonthlypaymentsround}")
-    print(f"Running Total: {previouslypaid:.2f}")
+    #print("- - - - - - - - - - - - - - - - - - - - -- - --")
+    #print(f"Next Due Date: {nextduedate}")
+    #print(f"Monthly Payment: {promomonthlypaymentsround}")
+    #print(f"Running Total: {previouslypaid:.2f}")
 
     ##store data in dic
     promorowforcsv = [promoID, nextduedate, promomonthlypaymentsround, previouslypaid]
@@ -232,7 +207,7 @@ for promo in rows:
    ##increase promo ID number before looping again.
    promoID += 1
 
-##use csv to import and calculate further
+##use all csv to import and calculate further
 
 allpromosdf = pd.read_csv(export_csv_all)
 
@@ -247,27 +222,16 @@ pivoted.reset_index(inplace=True)
 
 # Add total columns for MonthlyPayment and RunningTotal
 pivoted["TotalMonthlyPayment"] = pivoted.filter(like="MonthlyPayment").sum(axis=1)
-##this one doesn't total right
-#pivoted["TotalRunningTotal"] = pivoted.filter(like="RunningTotal").sum(axis=1)
+
+## cumulative sum the running total from total monthly payment
 pivoted["RunningTotal"] = pivoted["TotalMonthlyPayment"].cumsum()
 
 # Save the final table to a CSV file
 output_file = "promotion_summary_pivoted.csv"
 pivoted.to_csv(final_csv_out, index=False)
 
-print(f"Pivoted summary file saved to {final_csv_out}")
+print(f"Summary file saved to {final_csv_out}")
 
 #print(pivoted)
 
-##then delete temp csvs?
-##display results?
-
-## OR 
-
-## ADD: combine output from previous on matching dates to a table with columns
-##       - Next Due Date
-##       - PromoID monthly payment
-##       - Running total paid
-##       - all promos monthly payment
-##       - all promos running total
-   
+##consider adding delete the temporary files or remove them from being created in the first place
