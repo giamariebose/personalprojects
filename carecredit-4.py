@@ -137,10 +137,16 @@ for promo in rows:
    promoexpdate = date(promoexpyear, promoexpmonth, promoexpday)
    promoamountfinanced = float(promo[2])
 
-   ##set variable for temporary file name
+   ##set variable for temporary file name and write headers
    promoIDstr = str(promoID)
    promotempexport = export_path+"/tempdata_promoID"+promoIDstr+".csv"
    #print(f"temp files will export to {promotempexport}")
+   headers_export = ["PromoID", "DueDate", "MonthlyPayment", "RunningTotal"]
+   
+   # Create a CSV file and write the headers for promo specific csv
+   with open(promotempexport, mode="w", newline="") as file:
+       writer = csv.DictWriter(file, fieldnames=headers_export)
+       writer.writeheader()
 
    ##print promo information
    print(f"Promo ID: {promoID}")
@@ -187,6 +193,15 @@ for promo in rows:
     print(f"Next Due Date: {nextduedate}")
     print(f"Monthly Payment: {promomonthlypaymentsround}")
     print(f"Running Total: {previouslypaid:.2f}")
+
+    ##store data in dic
+    promorowforcsv = [promoID, nextduedate, promomonthlypaymentsround, previouslypaid]
+
+    ##write rows to promo specific temp csv
+    with open(promotempexport, mode="a", newline="") as file:
+        #writer = csv.DictWriter(file, fieldnames=headers_export)
+        writer = csv.writer(file)
+        writer.writerow(promorowforcsv)
     
     ## ADD: output each line to a list??? array?? object??? csv???
 
