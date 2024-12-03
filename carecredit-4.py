@@ -94,12 +94,27 @@ def calculate_next_due_date(calc_nextduedate, end_date):
 root = tk.Tk()
 root.withdraw()  # Hide the main window
 
-file_path = filedialog.askopenfilename()
-
-export_path = filedialog.askdirectory()
+file_path = filedialog.askopenfilename(title="Select csv that contains promo information")
 
 if file_path:
     print("Selected file:", file_path)
+
+##prompt for folder to store exports
+dialog_title = "Select a Folder for Results"
+export_path = filedialog.askdirectory(title=dialog_title)
+
+##declare overall csv export
+export_csv_all = export_path + "/ALL_Promos.csv"
+print(f"csv of all will be exported to {export_csv_all}")
+
+##create overall csv export file with headers
+headers_export = ["PromoID", "DueDate", "MonthlyPayment", "RunningTotal"]
+   
+# Create a CSV file and write the headers for promo specific csv
+with open(export_csv_all, mode="w", newline="") as file:
+    writer = csv.DictWriter(file, fieldnames=headers_export)
+    writer.writeheader()
+
 
 # Open the CSV file in read mode
 with open(file_path, 'r') as csvfile:
@@ -118,6 +133,7 @@ csvfile.close()
 ##count number of rows in rows
 promocount = len(rows)
 print(f"number of promos: {promocount}")
+
 
 #declare first promo ID, will be incremented in next loop
 promoID = int('1')
@@ -199,6 +215,12 @@ for promo in rows:
 
     ##write rows to promo specific temp csv
     with open(promotempexport, mode="a", newline="") as file:
+        #writer = csv.DictWriter(file, fieldnames=headers_export)
+        writer = csv.writer(file)
+        writer.writerow(promorowforcsv)
+    
+    ##write rows to promo csv of all
+    with open(export_csv_all, mode="a", newline="") as file:
         #writer = csv.DictWriter(file, fieldnames=headers_export)
         writer = csv.writer(file)
         writer.writerow(promorowforcsv)
