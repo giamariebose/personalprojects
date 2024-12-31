@@ -1,0 +1,11 @@
+webpage stored in: /home/kbose/Desktop/test_calendar.html
+service defined in: /lib/systemd/system/googlecalendar.service
+-edit with sudo nano /lib/systemd/system/googlecalendar.service
+-After writing the service file, save and quit out of Nano by pressing CTRL + X, Y, and then ENTER.
+
+copy files over winscp
+commeand line via ssh
+need to get rdp or vnc running
+
+to start: sudo systemctl enable googlecalendar --now
+to stop: sudo systemctl disable googlecalendar --now
