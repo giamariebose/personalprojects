@@ -9,30 +9,36 @@
 
         <style>
             body {
-                margin: 0;
-            }
+            margin: 0;
+            display: flex; /* Use flexbox to align the two halves side by side */
+        }
 
-            .container {
-                position: relative;
-                overflow: hidden;
-                width: 100vw;
-                height: 100vh;
-            }
+        .iframe-container {
+            width: 50vw; /* Each container takes up half the viewport width */
+            height: 100vh; /* Full height of the viewport */
+            position: relative; /* For contained positioning if needed */
+        }
 
-            .responsive-iframe {
-                position: absolute;
-                top: 0;
-                left: 50%; /* Start from the middle of the screen */
-                bottom: 0;
-                right: 0;
-                width: 50vw; /* Half the width of the viewport */
-                height: 100%;
-              }      
+        .iframe-left, .iframe-right {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Full width of its container */
+            height: 100%; /* Full height of its container */
+            border: none; /* Remove iframe borders */
+        }      
         </style>
     </head>
     <body>
-        <div class="container">
-            <iframe class="responsive-iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23E67C73&color=%23D81B60&color=%23F6BF26" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        <!-- Left Frame -->
+        <div class="iframe-container">
+            <iframe class="iframe-left" src="/home/kbose/Desktop/AgpTqun.jpg" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            <!-- if updating calendar, must readd class="responsive-iframe"-->
+            <!-- calendar link can be updated by accessing https://calendar.google.com/calendar/u/0/embedhelper-->
+        </div>
+        <!-- Right Frame -->
+        <div class="iframe-container">
+            <iframe class="iframe-right" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23E67C73&color=%23D81B60&color=%23F6BF26" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
             <!-- if updating calendar, must readd class="responsive-iframe"-->
             <!-- calendar link can be updated by accessing https://calendar.google.com/calendar/u/0/embedhelper-->
         </div>
