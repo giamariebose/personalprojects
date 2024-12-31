@@ -10,35 +10,68 @@
         <style>
             body {
             margin: 0;
-            display: flex; /* Use flexbox to align the two halves side by side */
+            display: flex; /* Split the page into two halves */
         }
 
-        .iframe-container {
-            width: 50vw; /* Each container takes up half the viewport width */
+        /* Left container (split vertically) */
+        .left-container {
+            width: 50vw; /* Left side occupies half the width of the viewport */
             height: 100vh; /* Full height of the viewport */
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .top-item, .bottom-item {
+            height: 50%; /* Each item takes up half the height of the left side */
+            width: 100%; /* Full width of the left side */
             position: relative; /* For contained positioning if needed */
         }
 
-        .iframe-left, .iframe-right {
+        .iframe {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%; /* Full width of its container */
-            height: 100%; /* Full height of its container */
+            width: 100%; /* Fill the container */
+            height: 100%; /* Fill the container */
             border: none; /* Remove iframe borders */
-        }      
+        }
+
+        /* Right container (single iframe) */
+        .right-container {
+            width: 50vw; /* Right side occupies half the width of the viewport */
+            height: 100vh; /* Full height of the viewport */
+            position: relative;
+        }
+        .responsive-image {
+            width: 100%; /* Make the image width fit the container */
+            height: 100%; /* Make the image height fit the container */
+            object-fit: cover; /* Ensures the image fills the container while maintaining aspect ratio */
+            object-position: center; /* Centers the image within the container */
+        }
         </style>
     </head>
     <body>
         <!-- Left Frame -->
-        <div class="iframe-container">
-            <iframe class="iframe-left" src="/home/kbose/Desktop/AgpTqun.jpg" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        <div class="left-container">
+            <!-- top left item -->
+            <div class="top-item">
+                <img class="responsive-image" src="/home/kbose/Desktop/AgpTqun.jpg">
+            </div>
             <!-- if updating calendar, must readd class="responsive-iframe"-->
             <!-- calendar link can be updated by accessing https://calendar.google.com/calendar/u/0/embedhelper-->
+             <!--bottom left  item-->
+            <div class="bottom-item">
+                <a class="weatherwidget-io" href="https://forecast7.com/en/42d74n87d88/mount-pleasant/?unit=us" data-label_1="MOUNT PLEASANT" data-label_2="WEATHER" data-theme="original" >MOUNT PLEASANT WEATHER</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
+            </div>
+        </div>
+        
         </div>
         <!-- Right Frame -->
-        <div class="iframe-container">
-            <iframe class="iframe-right" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23E67C73&color=%23D81B60&color=%23F6BF26" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        <div class="right-container">
+            <iframe class="iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23E67C73&color=%23D81B60&color=%23F6BF26" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
             <!-- if updating calendar, must readd class="responsive-iframe"-->
             <!-- calendar link can be updated by accessing https://calendar.google.com/calendar/u/0/embedhelper-->
         </div>
