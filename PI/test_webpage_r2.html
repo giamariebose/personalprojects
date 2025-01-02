@@ -18,7 +18,7 @@
 
         /* Left container (split vertically) */
         .left-container {
-            width: 50vw; /* Left side occupies half the width of the viewport */
+            width: 40vw; /* Left side occupies half the width of the viewport */
             height: 100vh; /* Full height of the viewport */
             display: flex;
             flex-direction: column; /* Stack items vertically */
@@ -53,7 +53,7 @@
 
         /* Right container (single iframe) */
         .right-container {
-            width: 50vw; /* Right side occupies half the width of the viewport */
+            width: 60vw; /* Right side occupies half the width of the viewport */
             height: 100vh; /* Full height of the viewport */
             position: relative;
         }
@@ -89,35 +89,14 @@
                 </script>
             </div>
             <div class="bottom-item"></div>
-            <script type="text/javascript">
-                let myDate = new Date();
-                let myDay = myDate.getDay();
-        
-                // Array of days. 
-                let weekday = ['Sunday', 'Monday', 'Tuesday',
-                    'Wednesday', 'Thursday', 'Friday', 'Saturday'
-                ];
-                document.write("Today is : " + weekday[myDay]);
-                document.write("<br/>");
-        
-                // get hour value. 
-                let hours = myDate.getHours();
-                let ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                let minutes = myDate.getMinutes();
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                let myTime = hours + " " + ampm + " : " + minutes +
-                    " : " + myDate.getMilliseconds();
-                document.write("\tCurrent time is : " + myTime); 
-            </script> 
+                <iframe src="https://free.timeanddate.com/clock/i9pe9aue/n2303/fn6/fs24/fc09f/tct/pct/ftb/pa8/tt0/th2/ts1/tb4" frameborder="0" allowtransparency="true"></iframe>
             </div>
         </div>
         
         </div>
         <!-- Right Frame -->
         <div class="right-container">
-            <iframe class="iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23E67C73&color=%23D81B60&color=%23F6BF26" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            <iframe class="iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&showTz=0&showTitle=0&showCalendars=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=NjAzOTk2MzQzNjJjNWE1Y2I5OGY5MzM2NTgyMGNkYmY0YTU3MTczMzkxMTNhNjBkYjQxNjFhNjE5YzlkODViNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=NzUzNjQ5Yzc5MzhlOTI0ZTVhNmRiMzQ0Yjc3NTdkOGFlNzRlMzZjZDI4YWJiYjAzMWU3ZDNlZTgzNGM0Y2MwOEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23F4511E&color=%23E67C73&color=%239E69AF&color=%23D81B60" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
             <!-- if updating calendar, must readd class="responsive-iframe"-->
             <!-- calendar link can be updated by accessing https://calendar.google.com/calendar/u/0/embedhelper-->
         </div>
