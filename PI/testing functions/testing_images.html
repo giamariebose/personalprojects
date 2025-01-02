@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <title>change picture</title>
+      <script type = "text/javascript">
+          function displayNextImage() {
+              x = (x === images.length - 1) ? 0 : x + 1;
+              document.getElementById("img").src = images[x];
+          }
+
+          function displayPreviousImage() {
+              x = (x <= 0) ? images.length - 1 : x - 1;
+              document.getElementById("img").src = images[x];
+          }
+
+          function startTimer() {
+              setInterval(displayNextImage, 9000); /* This timer is in milliseconds, 900=9 seconds, 60000 = 1 minute, 600000=10 minute, 14400000=4 hours, 28800000 = 8 hour*/
+          }
+
+          var images = [], x = -1;
+          images[0] = "http://192.168.1.20:5000/fbdownload/2024-everest.jpeg?tid=%22wTLKbG4yEPR61LNmpCKd2CwipzxbXrtxwy58O5xBFkkuZFQ-HjuGo0_7ZtGTVZCGpgxGJ6MxG-SwFcz4%22&mode=open&dlink=%222f426f736553686172652f43616c656e646172446973706c61792f323032342d657665726573742e6a706567%22&stdhtml=true&SynoToken=K7dzFrq8ZLBkc";
+          images[1] = "http://192.168.1.20:5000/fbdownload/katie_dave_0449.jpg?tid=%22Cu8wT4FAmb7xwDjCNXQ23SBUvkuHufnfMOABloA1FvS3sMe2UaFOI_P4MsCa701ZsDJnEZSvmtDR86I9%22&mode=open&dlink=%222f426f736553686172652f43616c656e646172446973706c61792f6b617469655f646176655f303434392e6a7067%22&stdhtml=true&SynoToken=K7dzFrq8ZLBkc";
+          images[2] = "http://192.168.1.20:5000/fbdownload/katie_dave_0676.jpg?tid=%22Cu8wT4FAmb7xwDjCNXQ23SBUvkuHufnfMOABloA1FvS3sMe2UaFOI_P4MsCa701ZsDJnEZSvmtDR86I9%22&mode=open&dlink=%222f426f736553686172652f43616c656e646172446973706c61792f6b617469655f646176655f303637362e6a7067%22&stdhtml=true&SynoToken=K7dzFrq8ZLBkc";
+      </script>
+   </head>
+
+   <body onload = "startTimer()">
+       <img id="img" src="startpicture.jpg"/>
+       <button type="button" onclick="displayPreviousImage()">Previous</button>
+       <button type="button" onclick="displayNextImage()">Next</button>
+   </body>
+</html>
