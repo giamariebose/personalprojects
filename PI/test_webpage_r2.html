@@ -8,6 +8,8 @@
         <title>Google Calendar</title>
 
         <style>
+        p {background-image: url('http://192.168.1.20:5000/fbdownload/2024-everest.jpeg?tid=%22wTLKbG4yEPR61LNmpCKd2CwipzxbXrtxwy58O5xBFkkuZFQ-HjuGo0_7ZtGTVZCGpgxGJ6MxG-SwFcz4%22&mode=open&dlink=%222f426f736553686172652f43616c656e646172446973706c61792f323032342d657665726573742e6a706567%22&stdhtml=true&SynoToken=K7dzFrq8ZLBkc');
+        }
             body {
             margin: 0;
             background-color: #333333; /* Dark grey color */
@@ -23,7 +25,7 @@
         }
 
         .top-item {
-            flex: 0 0 70%; /* Fixed height of 70% for the top item */
+            flex: 0 0 60%; /* Fixed height of 70% for the top item */
             width: 100%; /* Full width of the left side */
             position: relative;
         }
@@ -38,7 +40,6 @@
             flex: 1; /* Bottom item takes up 1 part of the remaining space */
             width: 100%; /* Full width of the left side */
             position: relative;
-            margin-bottom: 5%;
         }
 
         .iframe {
@@ -81,11 +82,35 @@
                 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
                 </script>
             </div>
-            <div class="bottom-item"></div>
+            <div class="middle-item">
                 <a class="weatherwidget-io" href="https://forecast7.com/en/33d45n97d77/sunset/" data-label_1="SUNSET" data-label_2="WEATHER" data-theme="original" >SUNSET WEATHER</a>
                 <script>
                 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
                 </script>
+            </div>
+            <div class="bottom-item"></div>
+            <script type="text/javascript">
+                let myDate = new Date();
+                let myDay = myDate.getDay();
+        
+                // Array of days. 
+                let weekday = ['Sunday', 'Monday', 'Tuesday',
+                    'Wednesday', 'Thursday', 'Friday', 'Saturday'
+                ];
+                document.write("Today is : " + weekday[myDay]);
+                document.write("<br/>");
+        
+                // get hour value. 
+                let hours = myDate.getHours();
+                let ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                let minutes = myDate.getMinutes();
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                let myTime = hours + " " + ampm + " : " + minutes +
+                    " : " + myDate.getMilliseconds();
+                document.write("\tCurrent time is : " + myTime); 
+            </script> 
             </div>
         </div>
         
