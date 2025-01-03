@@ -3,8 +3,7 @@
 <html lang="en-US">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="refresh" content="600">
-
+        
         <title>Google Calendar</title>
 
         <style>
@@ -135,12 +134,22 @@
                     
                 }
       
-                function startTimer() {
-                    setInterval(displayRandomImage, 600000); /* This timer is in milliseconds, 900=9 seconds, 60000 = 1 minute, 600000=10 minute, 14400000=4 hours, 28800000 = 8 hour*/
+
+                function frameRefrshInterval() {
+                    document.getElementById("googlecalendar").src = document.getElementById("googlecalendar").src
                 }
-      
-                
+
+                function startTimer() {
+                    /* These timers are in milliseconds, 900=9 seconds, 60000 = 1 minute, 600000=10 minute, 3600000=1 hour 14400000=4 hours, 28800000 = 8 hour*/
+                    /* timers start on page load */
+                    setInterval(displayRandomImage, 3600000); /*this timer is to rotate the picture*/
+                    setInterval(frameRefrshInterval, 600000); /*this timer is to refresh the google calendar*/
+                }
+
             </script>
+            
+                
+           
     </head>
     <body onload="startTimer()">
         
@@ -178,7 +187,7 @@
         </div>
         <!-- Right Frame -->
         <div class="right-container">
-            <iframe class="iframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&showTz=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=NzUzNjQ5Yzc5MzhlOTI0ZTVhNmRiMzQ0Yjc3NTdkOGFlNzRlMzZjZDI4YWJiYjAzMWU3ZDNlZTgzNGM0Y2MwOEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23E67C73&color=%239E69AF&color=%23D81B60&color=%23F6BF26" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            <iframe class="iframe" id="googlecalendar" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showPrint=0&showTz=0&showTitle=0&showCalendars=0&src=Z2lhLm1hcmllLmJvc2VAZ21haWwuY29t&src=NjAzOTk2MzQzNjJjNWE1Y2I5OGY5MzM2NTgyMGNkYmY0YTU3MTczMzkxMTNhNjBkYjQxNjFhNjE5YzlkODViNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aDdpMjFjOTJoZzdhb2w0bTkzb3BrdDQwazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=NzUzNjQ5Yzc5MzhlOTI0ZTVhNmRiMzQ0Yjc3NTdkOGFlNzRlMzZjZDI4YWJiYjAzMWU3ZDNlZTgzNGM0Y2MwOEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZjQ1YTVkOThlOGExYzE0MTk0MzZhOThhNzIxMDQzYzM2NDNhNDkyZjcwNDUxZmY2ZWM5ZDcxZDg0ZGIyMzQzN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23041439&color=%23F4511E&color=%23E67C73&color=%239E69AF&color=%23D81B60" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
             <!-- if updating calendar, must readd class="responsive-iframe"-->
             <!-- calendar link can be updated by accessing https://calendar.google.com/calendar/u/0/embedhelper-->
         </div>
