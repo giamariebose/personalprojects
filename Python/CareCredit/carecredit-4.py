@@ -1,5 +1,12 @@
 ##ISSUE: in sample data with due date on 30th and promo expiring on 17th of month, 
 ## that last month is still counted for some reason even though the promo is expired before the due date. :(
+## testing 1/20/2025 showed that the next payment is showing for the month after input, not the actual next due, which is shifting the months in the report. 
+
+##IMPORT FILE REQUIREMENT: 
+##HEADERS:
+##NextDueDate
+##PromoExpiration
+##PromoBalance
 
 ##import modules
 import csv
