@@ -169,9 +169,31 @@ for promo in rows:
    promomonthlypayments = promoamountfinanced / promopaymentsremaining
    promomonthlypaymentsround = round_up_to_nearest_hundredth(promomonthlypayments)
    #print(f"Monthly Payment Required: ${promomonthlypaymentsround}")
+   
+   ## Adding first month separate
+   ##calculate columns for first month
+   previouslypaid = int("0")
+   runningtotal = promomonthlypaymentsround+previouslypaid
+   previouslypaid = runningtotal
+   firstpromorowforcsv = [promoID, nextduedate, promomonthlypaymentsround, previouslypaid]
+   ##write first row to promo specific temp csv
+   with open(promotempexport, mode="a", newline="") as file:
+    #writer = csv.DictWriter(file, fieldnames=headers_export)
+    writer = csv.writer(file)
+    writer.writerow(firstpromorowforcsv)
+
+    ##write first row to promo csv of all
+    with open(export_csv_all, mode="a", newline="") as file:
+     #writer = csv.DictWriter(file, fieldnames=headers_export)
+     writer = csv.writer(file)
+     writer.writerow(firstpromorowforcsv)
+   ## decrement promopaymentsremaining by 1
+
+   promopaymentsremaining -= 1
+
 
    #loop here for number of payments remaining
-   previouslypaid = int("0")
+   
    for i in range(promopaymentsremaining):
     runningtotal = promomonthlypaymentsround+previouslypaid
     previouslypaid = runningtotal
@@ -179,6 +201,9 @@ for promo in rows:
     # print(f"monthly payment due: {monthlypayment}")
     # print(f"total paid to date is: {runningtotal}")    
 
+    # move to next month
+    next_month = nextduedate.month % 12 + 1
+    next_year = nextduedate.year + (nextduedate.month // 12)
     
     ##testing date here
     try:
@@ -207,14 +232,11 @@ for promo in rows:
         writer = csv.writer(file)
         writer.writerow(promorowforcsv)
     
- 
-
+    
    ##increase promo ID number before looping again.
    promoID += 1
 
-   # move to next month
-   next_month = nextduedate.month % 12 + 1
-   next_year = nextduedate.year + (nextduedate.month // 12)
+   
 
 ##use all csv to import and calculate further
 
