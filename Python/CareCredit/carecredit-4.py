@@ -179,9 +179,7 @@ for promo in rows:
     # print(f"monthly payment due: {monthlypayment}")
     # print(f"total paid to date is: {runningtotal}")    
 
-    # move to next month
-    next_month = nextduedate.month % 12 + 1
-    next_year = nextduedate.year + (nextduedate.month // 12)
+    
     ##testing date here
     try:
         nextduedate = date(next_year, next_month, nextdueday)
@@ -213,6 +211,10 @@ for promo in rows:
 
    ##increase promo ID number before looping again.
    promoID += 1
+
+   # move to next month
+   next_month = nextduedate.month % 12 + 1
+   next_year = nextduedate.year + (nextduedate.month // 12)
 
 ##use all csv to import and calculate further
 
