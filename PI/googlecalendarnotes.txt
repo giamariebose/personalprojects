@@ -9,3 +9,20 @@ need to get rdp or vnc running
 
 to start: sudo systemctl enable googlecalendar --now
 to stop: sudo systemctl disable googlecalendar --now
+
+User: Kbose
+Pass: B...5
+
+
+To transfer files use winscp / scp to device
+To access services use putty / ssh to device
+VNC Notes
+	- Enable with "sudo raspi-config" / interface options
+	- Access with tiger vnc to device IP
+	- Reference: Remote access - Raspberry Pi Documentation
+
+
+In github\pi\csv creation
+	- Beginning_images.csv - list of links to syno photos
+	- Generate_images_list.ps1 - run to create block for calendar page
+    - Newimagelist.txt - output of script to paste into calendar webpage
